@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  libretranslate-cuda:
+    container_name: libretranslate-cuda
+    image: libretranslate/libretranslate:latest-cuda
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ['CMD-SHELL', './venv/bin/python scripts/healthcheck.py'] 
+    environment: 
+        - LT_SUGGESTIONS=true
+        - LT_UPDATE_MODELS=true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
