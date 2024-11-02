@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <UserSecretsId>2e3810ac-7e92-466e-9768-6862685053a0</UserSecretsId>
+	<PackageId>LibreTranslate.Client.Net</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 # LibreTranslate.Client.Net
 
-LibreTranslate.Client.Net is a unofficial C# client (netstandard2.1) for using the rest api of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate). Unfortunately, netstandard2.0 cannot be supported because HttpStatusCode.TooManyRequests is missing in netstandard2.1. All functions of LibreTranslate (v1.6.1) are supported.
+LibreTranslate.Client.Net is a unofficial C# client (netstandard2.0) for using the rest api of [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate). All functions of LibreTranslate (v1.6.1) are supported.
 This library supports all the LibreTranslate languages. For ease of use, some language code is stored in `LanguageCode`.
 
 The library uses the latest technologies. Source code generators for logging and serialization and deserialization for JSON. It can also be used with HTTPClientFactory and DependencyInjection.

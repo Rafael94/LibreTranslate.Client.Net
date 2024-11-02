@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -52,7 +51,7 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
         _client = client;
         _options = options;
         _externalClient = true;
-        _logger = logger ?? NullLogger.Instance; 
+        _logger = logger ?? NullLogger.Instance;
     }
 
     public virtual void Dispose()
@@ -74,7 +73,11 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
                 return (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.DetectResponse, cancellationToken))!;
             case HttpStatusCode.BadRequest:
             case HttpStatusCode.Forbidden:
+#if NETSTANDARD2_0
+            case (HttpStatusCode)429:
+#else
             case HttpStatusCode.TooManyRequests:
+#endif
             case HttpStatusCode.InternalServerError:
                 LibreTranslateApiError error = (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.LibreTranslateApiError, cancellationToken))!;
                 error.StatusCode = response.StatusCode;
@@ -98,7 +101,7 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
             Content = new StringContent(
                 JsonSerializer.Serialize(new BaseRequest(_options.ApiKey), LibreTranslatorJsonSerializerContext.Default.BaseRequest),
                 Encoding.UTF8,
-                MediaTypeNames.Application.Json
+                "application/json"
                 )
         };
 
@@ -130,7 +133,11 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
                 return (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.TranslateResponse, cancellationToken))!;
             case HttpStatusCode.BadRequest:
             case HttpStatusCode.Forbidden:
+#if NETSTANDARD2_0
+            case (HttpStatusCode)429:
+#else
             case HttpStatusCode.TooManyRequests:
+#endif
             case HttpStatusCode.InternalServerError:
                 LibreTranslateApiError error = (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.LibreTranslateApiError, cancellationToken))!;
                 error.StatusCode = response.StatusCode;
@@ -153,14 +160,18 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
                     Format = format,
                 },
                 LibreTranslatorJsonSerializerContext.Default.TranslateMultipleRequest, cancellationToken);
-        
+
         switch (response.StatusCode)
         {
             case HttpStatusCode.OK:
                 return (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.TranslateMultipleResponse, cancellationToken))!;
             case HttpStatusCode.BadRequest:
             case HttpStatusCode.Forbidden:
+#if NETSTANDARD2_0
+            case (HttpStatusCode)429:
+#else
             case HttpStatusCode.TooManyRequests:
+#endif
             case HttpStatusCode.InternalServerError:
                 LibreTranslateApiError error = (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.LibreTranslateApiError, cancellationToken))!;
                 error.StatusCode = response.StatusCode;
@@ -201,7 +212,11 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
                 return (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.TranslateFileResponse, cancellationToken))!;
             case HttpStatusCode.BadRequest:
             case HttpStatusCode.Forbidden:
+#if NETSTANDARD2_0
+            case (HttpStatusCode)429:
+#else
             case HttpStatusCode.TooManyRequests:
+#endif
             case HttpStatusCode.InternalServerError:
                 LibreTranslateApiError error = (await response.Content.ReadFromJsonAsync(LibreTranslatorJsonSerializerContext.Default.LibreTranslateApiError, cancellationToken))!;
                 error.StatusCode = response.StatusCode;
@@ -225,7 +240,7 @@ public partial class LibreTranslateClient : IDisposable, ILibreTranslateClient
             Content = new StringContent(
                JsonSerializer.Serialize(new BaseRequest(_options.ApiKey), LibreTranslatorJsonSerializerContext.Default.BaseRequest),
                Encoding.UTF8,
-               MediaTypeNames.Application.Json
+               "application/json"
                )
         };
 

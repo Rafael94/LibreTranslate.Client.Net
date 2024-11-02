@@ -19,7 +19,11 @@ public sealed class LibreTranslateClientOptions
         get { return _baseAddress; }
         set
         {
+#if (NETSTANDARD2_0)
+            if (value.EndsWith("/", System.StringComparison.Ordinal))
+#else
             if (value.EndsWith('/'))
+#endif
             {
                 _baseAddress = value;
             }

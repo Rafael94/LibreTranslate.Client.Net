@@ -7,6 +7,7 @@
     <IsPackable>false</IsPackable>
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <UserSecretsId>1a620793-76b9-4ad9-b96f-f5d28466b0a3</UserSecretsId>
+	 <PackageId>LibreTranslate.Client.Net.Tests</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
