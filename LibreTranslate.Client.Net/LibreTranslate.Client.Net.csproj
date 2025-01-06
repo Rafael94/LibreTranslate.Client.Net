@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>2e3810ac-7e92-466e-9768-6862685053a0</UserSecretsId>
 	<PackageId>LibreTranslate.Client.Net</PackageId>
+	<PackageReleaseNotes>Support for .NET Standard 2.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
